@@ -1,56 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>EduTrack Pro</title>
+  <title>EduTrack Galaxy</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<div class="stars"></div>
 <div id="toast"></div>
 
 <nav>
-  <h2>EduTrack Pro</h2>
-  <div>
-    <button onclick="toggleTheme()">🌙</button>
-  </div>
+  <h2>🌌 EduTrack Galaxy</h2>
 </nav>
 
-<section id="loginPage" class="page active center">
-  <h1>Selamat Datang 👋</h1>
-  <input type="text" id="nameInput" placeholder="Masukkan nama kamu">
-  <button onclick="saveName()">Masuk</button>
-</section>
+<section class="container">
+  <h1>Mission Deadline Tracker 🚀</h1>
 
-<section id="dashboard" class="page">
-  <h1 id="welcomeText"></h1>
   <div class="card">
-    <p>Total Tugas: <span id="taskCount">0</span></p>
-    <p>Rata-rata Nilai: <span id="avgGrade">0</span></p>
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <input type="text" id="taskInput" placeholder="Nama tugas...">
+    <input type="date" id="deadlineInput">
+    <button onclick="addTask()">Tambahkan Misi</button>
   </div>
-  <div class="menu">
-    <button onclick="showPage('tasks')">Kelola Tugas</button>
-    <button onclick="showPage('grades')">Kelola Nilai</button>
-  </div>
-</section>
 
-<section id="tasks" class="page">
-  <h1>📋 Tugas</h1>
-  <input type="text" id="taskInput" placeholder="Nama tugas">
-  <input type="date" id="deadlineInput">
-  <button onclick="addTask()">Tambah</button>
   <ul id="taskList"></ul>
-  <button onclick="showPage('dashboard')">⬅ Kembali</button>
-</section>
-
-<section id="grades" class="page">
-  <h1>📊 Nilai</h1>
-  <input type="number" id="gradeInput" placeholder="Masukkan nilai">
-  <button onclick="addGrade()">Tambah</button>
-  <ul id="gradeList"></ul>
-  <button onclick="showPage('dashboard')">⬅ Kembali</button>
 </section>
 
 <script src="script.js"></script>
