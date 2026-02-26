@@ -446,3 +446,34 @@ body::before{
   box-shadow:0 0 15px rgba(0,198,255,0.3);
   animation:fadeUp 0.5s ease;
 }
+/* =========================
+   BOTTOM NAV BESAR & MODERN
+========================= */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: rgba(20, 20, 40, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.bottom-nav button {
+  background: linear-gradient(45deg, #7f5af0, #2cb67d);
+  border: none;
+  color: white;
+  font-size: 16px;      /* BESARIN TEKS */
+  padding: 12px 18px;   /* BESARIN TOMBOL */
+  border-radius: 15px;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.bottom-nav button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #7f5af0;
+}
