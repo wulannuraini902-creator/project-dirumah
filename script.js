@@ -1,94 +1,104 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let grades = JSON.parse(localStorage.getItem("grades")) || [];
-let userName = localStorage.getItem("userName");
-
-if(userName){
-  showDashboard();
+body{
+  margin:0;
+  font-family:Arial;
+  background:radial-gradient(circle at top, #1a002b, #000814 70%);
+  color:white;
+  overflow-x:hidden;
 }
 
-function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+/* STAR ANIMATION */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:transparent;
+  background-image:radial-gradient(white 1px, transparent 1px);
+  background-size:50px 50px;
+  animation:moveStars 60s linear infinite;
+  z-index:-1;
 }
 
-function saveName(){
-  let name = document.getElementById("nameInput").value;
-  if(name){
-    localStorage.setItem("userName",name);
-    userName=name;
-    showDashboard();
-  }
+@keyframes moveStars{
+  from{background-position:0 0;}
+  to{background-position:1000px 1000px;}
 }
 
-function showDashboard(){
-  showPage("dashboard");
-  document.getElementById("welcomeText").textContent="Halo, "+userName+" 👋";
-  renderTasks();
-  renderGrades();
+nav{
+  text-align:center;
+  padding:20px;
+  font-size:22px;
+  letter-spacing:2px;
 }
 
-function addTask(){
-  let name=document.getElementById("taskInput").value;
-  let deadline=document.getElementById("deadlineInput").value;
-  if(name && deadline){
-    tasks.push({name,deadline});
-    localStorage.setItem("tasks",JSON.stringify(tasks));
-    showToast("Tugas ditambahkan!");
-    renderTasks();
-  }
+.container{
+  padding:30px;
+  text-align:center;
 }
 
-function renderTasks(){
-  let list=document.getElementById("taskList");
-  list.innerHTML="";
-  tasks.forEach(t=>{
-    let li=document.createElement("li");
-    li.textContent=t.name+" (Deadline: "+t.deadline+")";
-
-    let today=new Date();
-    let dl=new Date(t.deadline);
-    let diff=(dl-today)/(1000*60*60*24);
-
-    if(diff<=2){
-      li.classList.add("deadline-soon");
-    }
-
-    list.appendChild(li);
-  });
-  document.getElementById("taskCount").textContent=tasks.length;
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:20px;
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 20px #7f5af0;
+  margin-bottom:30px;
+  animation:fadeUp 0.8s ease;
 }
 
-function addGrade(){
-  let val=parseInt(document.getElementById("gradeInput").value);
-  if(!isNaN(val)){
-    grades.push(val);
-    localStorage.setItem("grades",JSON.stringify(grades));
-    showToast("Nilai ditambahkan!");
-    renderGrades();
-  }
+input{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  margin:5px;
 }
 
-function renderGrades(){
-  let list=document.getElementById("gradeList");
-  list.innerHTML="";
-  grades.forEach(g=>{
-    let li=document.createElement("li");
-    li.textContent=g;
-    list.appendChild(li);
-  });
-
-  let avg=grades.length?grades.reduce((a,b)=>a+b)/grades.length:0;
-  document.getElementById("avgGrade").textContent=avg.toFixed(1);
-  document.getElementById("progressBar").style.width=Math.min(avg,100)+"%";
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#7f5af0,#00c6ff);
+  color:white;
+  font-weight:bold;
+  transition:0.3s;
 }
 
-function toggleTheme(){
-  document.body.classList.toggle("dark");
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 15px #00c6ff;
 }
 
-function showToast(msg){
-  let toast=document.getElementById("toast");
-  toast.textContent=msg;
-  toast.style.opacity=1;
-  setTimeout(()=>toast.style.opacity=0,2000);
+ul{
+  list-style:none;
+  padding:0;
+}
+
+li{
+  margin:10px 0;
+  padding:15px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.1);
+  transition:0.3s;
+  animation:fadeUp 0.5s ease;
+}
+
+.deadline-soon{
+  background:rgba(255,0,80,0.6);
+  box-shadow:0 0 15px red;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+#toast{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#7f5af0;
+  padding:10px 20px;
+  border-radius:20px;
+  opacity:0;
+  transition:0.5s;
 }
