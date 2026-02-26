@@ -1,104 +1,42 @@
-body{
-  margin:0;
-  font-family:Arial;
-  background:radial-gradient(circle at top, #1a002b, #000814 70%);
-  color:white;
-  overflow-x:hidden;
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function addTask(){
+  let name = document.getElementById("taskInput").value;
+  let deadline = document.getElementById("deadlineInput").value;
+
+  if(name && deadline){
+    tasks.push({name, deadline});
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    showToast("🚀 Misi ditambahkan!");
+    renderTasks();
+  }
 }
 
-/* STAR ANIMATION */
-.stars{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:transparent;
-  background-image:radial-gradient(white 1px, transparent 1px);
-  background-size:50px 50px;
-  animation:moveStars 60s linear infinite;
-  z-index:-1;
+function renderTasks(){
+  let list = document.getElementById("taskList");
+  list.innerHTML="";
+
+  tasks.forEach(t=>{
+    let li = document.createElement("li");
+    li.innerHTML = `<strong>${t.name}</strong><br>Deadline: ${t.deadline}`;
+
+    let today = new Date();
+    let dl = new Date(t.deadline);
+    let diff = (dl - today)/(1000*60*60*24);
+
+    if(diff <= 2){
+      li.classList.add("deadline-soon");
+    }
+
+    list.appendChild(li);
+  });
 }
 
-@keyframes moveStars{
-  from{background-position:0 0;}
-  to{background-position:1000px 1000px;}
+function showToast(msg){
+  let toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.style.opacity = 1;
+  setTimeout(()=>toast.style.opacity=0,2000);
 }
 
-nav{
-  text-align:center;
-  padding:20px;
-  font-size:22px;
-  letter-spacing:2px;
-}
-
-.container{
-  padding:30px;
-  text-align:center;
-}
-
-.card{
-  background:rgba(255,255,255,0.08);
-  padding:20px;
-  border-radius:20px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 0 20px #7f5af0;
-  margin-bottom:30px;
-  animation:fadeUp 0.8s ease;
-}
-
-input{
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  margin:5px;
-}
-
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  background:linear-gradient(45deg,#7f5af0,#00c6ff);
-  color:white;
-  font-weight:bold;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 15px #00c6ff;
-}
-
-ul{
-  list-style:none;
-  padding:0;
-}
-
-li{
-  margin:10px 0;
-  padding:15px;
-  border-radius:15px;
-  background:rgba(255,255,255,0.1);
-  transition:0.3s;
-  animation:fadeUp 0.5s ease;
-}
-
-.deadline-soon{
-  background:rgba(255,0,80,0.6);
-  box-shadow:0 0 15px red;
-}
-
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-#toast{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#7f5af0;
-  padding:10px 20px;
-  border-radius:20px;
-  opacity:0;
-  transition:0.5s;
-}
+renderTasks();
