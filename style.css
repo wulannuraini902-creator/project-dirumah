@@ -1,0 +1,108 @@
+:root{
+  --bg1:#667eea;
+  --bg2:#764ba2;
+  --card:rgba(255,255,255,0.15);
+  --text:white;
+}
+
+.dark{
+  --bg1:#1e1e2f;
+  --bg2:#12121c;
+  --card:#2a2a40;
+  --text:#f1f1f1;
+}
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  transition:0.3s;
+}
+
+nav{
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:rgba(0,0,0,0.2);
+}
+
+.page{display:none;padding:30px;animation:fade 0.5s;}
+.active{display:block;}
+.center{text-align:center;margin-top:100px;}
+
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+  backdrop-filter:blur(10px);
+}
+
+.menu button{
+  margin:5px;
+}
+
+button{
+  padding:8px 15px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:white;
+  color:#764ba2;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+input{
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  margin:5px 0;
+}
+
+.progress-container{
+  width:100%;
+  height:20px;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#00ffcc;
+  transition:width 0.5s ease;
+}
+
+li{
+  background:var(--card);
+  margin:5px 0;
+  padding:8px;
+  border-radius:8px;
+}
+
+.deadline-soon{
+  background:#ff4d4d !important;
+}
+
+#toast{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:black;
+  color:white;
+  padding:10px 15px;
+  border-radius:10px;
+  opacity:0;
+  transition:0.5s;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;}
+}
