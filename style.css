@@ -141,3 +141,31 @@ li{
   background:linear-gradient(90deg,#7f5af0,#00c6ff);
   transition:1s;
 }
+@media (max-width: 600px){
+
+  nav h2{
+    font-size:18px;
+  }
+
+  .container{
+    padding:15px;
+  }
+
+  input{
+    width:100%;
+    margin-bottom:10px;
+  }
+
+  button{
+    width:100%;
+  }
+
+  li{
+    font-size:14px;
+  }
+
+  .progress-card{
+    padding:20px;
+  }
+
+}
