@@ -1,5 +1,8 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+/* =========================
+   TAMBAH TUGAS
+========================= */
 function addTask(){
   let name = document.getElementById("taskInput")?.value;
   let deadline = document.getElementById("deadlineInput")?.value;
@@ -7,17 +10,34 @@ function addTask(){
   if(name && deadline){
     tasks.push({name, deadline, done:false});
     localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    document.getElementById("taskInput").value="";
+    document.getElementById("deadlineInput").value="";
+
     showToast("🚀 Misi ditambahkan!");
     renderTasks();
+    renderProgress();
+    renderCalendar();
   }
 }
 
+/* =========================
+   SELESAIKAN TUGAS
+========================= */
 function toggleDone(index){
-  tasks[index].done = !tasks[index].done;
+  tasks[index].done = true;
+
   localStorage.setItem("tasks", JSON.stringify(tasks));
+
+  showToast("✨ Misi selesai!");
   renderTasks();
+  renderProgress();
+  renderCalendar();
 }
 
+/* =========================
+   TAMPILKAN TUGAS
+========================= */
 function renderTasks(){
   let list = document.getElementById("taskList");
   if(!list) return;
@@ -25,38 +45,55 @@ function renderTasks(){
   list.innerHTML="";
 
   tasks.forEach((t,index)=>{
-    let li = document.createElement("li");
 
-    li.innerHTML = `
-      <strong style="${t.done ? 'text-decoration:line-through;' : ''}">
-        ${t.name}
-      </strong><br>
-      Deadline: ${t.deadline}<br>
-      <button onclick="toggleDone(${index})">
-        ${t.done ? 'Batal' : 'Done'}
-      </button>
-    `;
+    // HANYA tampilkan yang BELUM selesai
+    if(!t.done){
 
-    let today = new Date();
-    let dl = new Date(t.deadline);
-    let diff = (dl - today)/(1000*60*60*24);
+      let li = document.createElement("li");
+      li.className="task-item";
 
-    if(diff <= 2 && !t.done){
-      li.classList.add("deadline-soon");
+      li.innerHTML = `
+        <div>
+          <strong>${t.name}</strong><br>
+          <small>Deadline: ${t.deadline}</small>
+        </div>
+        <button onclick="toggleDone(${index})">
+          ✅ Done
+        </button>
+      `;
+
+      let today = new Date();
+      let dl = new Date(t.deadline);
+      let diff = (dl - today)/(1000*60*60*24);
+
+      if(diff <= 2){
+        li.classList.add("deadline-soon");
+      }
+
+      list.appendChild(li);
     }
 
-    list.appendChild(li);
   });
 }
 
+/* =========================
+   TOAST NOTIFIKASI
+========================= */
 function showToast(msg){
   let toast = document.getElementById("toast");
   if(!toast) return;
+
   toast.textContent = msg;
   toast.style.opacity = 1;
-  setTimeout(()=>toast.style.opacity=0,2000);
+
+  setTimeout(()=>{
+    toast.style.opacity=0;
+  },2000);
 }
 
+/* =========================
+   PROGRESS PAGE
+========================= */
 function renderProgress(){
   let fill = document.getElementById("progressFill");
   let text = document.getElementById("progressText");
@@ -71,9 +108,9 @@ function renderProgress(){
   text.innerText = percent + "% Misi Selesai 🌠";
 }
 
-renderTasks();
-renderProgress();
-// Calendar View
+/* =========================
+   CALENDAR PAGE
+========================= */
 function renderCalendar(){
   let cal = document.getElementById("calendarList");
   if(!cal) return;
@@ -85,23 +122,27 @@ function renderCalendar(){
     return;
   }
 
-  tasks.sort((a,b)=> new Date(a.deadline) - new Date(b.deadline));
+  let sorted = [...tasks].sort((a,b)=>
+    new Date(a.deadline) - new Date(b.deadline)
+  );
 
-  tasks.forEach(t=>{
+  sorted.forEach(t=>{
     let div = document.createElement("div");
     div.className="card";
+
     div.innerHTML = `
       <strong>${t.name}</strong><br>
-      Deadline: ${t.deadline}
+      Deadline: ${t.deadline}<br>
+      Status: ${t.done ? "Selesai ✅" : "Belum"}
     `;
+
     cal.appendChild(div);
   });
 }
 
-renderCalendar();
-
-
-// Focus Timer
+/* =========================
+   FOCUS TIMER
+========================= */
 let time = 1500;
 let interval;
 
@@ -110,6 +151,7 @@ function startTimer(){
 
   interval = setInterval(()=>{
     time--;
+
     let minutes = Math.floor(time/60);
     let seconds = time%60;
 
@@ -130,3 +172,10 @@ function resetTimer(){
   time=1500;
   document.getElementById("timer").innerText="25:00";
 }
+
+/* =========================
+   LOAD AWAL
+========================= */
+renderTasks();
+renderProgress();
+renderCalendar();
