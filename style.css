@@ -379,3 +379,70 @@ body::before{
 .container{
   padding-bottom:80px;
 }
+/* FORM MODERN */
+.task-form{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.input-group{
+  display:flex;
+  align-items:center;
+  background:rgba(255,255,255,0.08);
+  padding:12px;
+  border-radius:15px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 15px rgba(127,90,240,0.4);
+  transition:0.3s;
+}
+
+.input-group:hover{
+  box-shadow:0 0 25px #00c6ff;
+}
+
+.input-group span{
+  margin-right:10px;
+  font-size:18px;
+}
+
+.input-group input{
+  background:transparent;
+  border:none;
+  color:white;
+  outline:none;
+  width:100%;
+  font-size:14px;
+}
+
+.add-btn{
+  background:linear-gradient(90deg,#7f5af0,#00c6ff);
+  border:none;
+  padding:12px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.add-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px #00c6ff;
+}
+
+/* LIST STYLE */
+#taskList{
+  margin-top:25px;
+  list-style:none;
+  padding:0;
+}
+
+#taskList li{
+  background:rgba(255,255,255,0.08);
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:12px;
+  box-shadow:0 0 15px rgba(0,198,255,0.3);
+  animation:fadeUp 0.5s ease;
+}
