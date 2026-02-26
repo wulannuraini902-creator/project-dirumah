@@ -73,3 +73,60 @@ function renderProgress(){
 
 renderTasks();
 renderProgress();
+// Calendar View
+function renderCalendar(){
+  let cal = document.getElementById("calendarList");
+  if(!cal) return;
+
+  cal.innerHTML="";
+
+  if(tasks.length === 0){
+    cal.innerHTML="<p>Tidak ada deadline.</p>";
+    return;
+  }
+
+  tasks.sort((a,b)=> new Date(a.deadline) - new Date(b.deadline));
+
+  tasks.forEach(t=>{
+    let div = document.createElement("div");
+    div.className="card";
+    div.innerHTML = `
+      <strong>${t.name}</strong><br>
+      Deadline: ${t.deadline}
+    `;
+    cal.appendChild(div);
+  });
+}
+
+renderCalendar();
+
+
+// Focus Timer
+let time = 1500;
+let interval;
+
+function startTimer(){
+  if(interval) return;
+
+  interval = setInterval(()=>{
+    time--;
+    let minutes = Math.floor(time/60);
+    let seconds = time%60;
+
+    document.getElementById("timer").innerText =
+      `${minutes}:${seconds<10?'0':''}${seconds}`;
+
+    if(time<=0){
+      clearInterval(interval);
+      interval=null;
+      alert("🎉 Fokus Selesai!");
+    }
+  },1000);
+}
+
+function resetTimer(){
+  clearInterval(interval);
+  interval=null;
+  time=1500;
+  document.getElementById("timer").innerText="25:00";
+}
