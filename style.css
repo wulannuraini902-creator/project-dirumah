@@ -291,3 +291,28 @@ body:not(.landing)::before{
   background-size:600px 600px;
   z-index:-2;
 }
+.card{
+  background: rgba(255,255,255,0.08);
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:15px;
+  backdrop-filter: blur(10px);
+}
+
+.indicator-item{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:8px;
+}
+
+.add-indicator{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.status{
+  margin-top:10px;
+  font-weight:bold;
+}
