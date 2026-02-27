@@ -1,42 +1,68 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 /* =========================
-   TAMBAH TUGAS
+   TAMBAH TUGAS BARU
 ========================= */
 function addTask(){
-  let name = document.getElementById("taskInput")?.value;
-  let deadline = document.getElementById("deadlineInput")?.value;
-
-  if(name && deadline){
-    tasks.push({name, deadline, done:false});
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-    document.getElementById("taskInput").value="";
-    document.getElementById("deadlineInput").value="";
-
-    showToast("🚀 Misi ditambahkan!");
-    renderTasks();
-    renderProgress();
-    renderCalendar();
+  let subject = document.getElementById("subjectInput").value;
+  if(!subject){
+    alert("Isi nama pelajaran dulu!");
+    return;
   }
-}
 
-/* =========================
-   SELESAIKAN TUGAS
-========================= */
-function toggleDone(index){
-  tasks[index].done = true;
+  tasks.push({
+    subject,
+    indicators: []
+  });
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
-
-  showToast("✨ Misi selesai!");
+  document.getElementById("subjectInput").value="";
   renderTasks();
-  renderProgress();
-  renderCalendar();
 }
 
 /* =========================
-   TAMPILKAN TUGAS
+   TAMBAH INDIKATOR
+========================= */
+function addIndicator(taskIndex){
+  let text = document.getElementById(`indicatorText-${taskIndex}`).value;
+  let deadline = document.getElementById(`indicatorDeadline-${taskIndex}`).value;
+
+  if(!text || !deadline){
+    alert("Isi indikator dan deadline!");
+    return;
+  }
+
+  tasks[taskIndex].indicators.push({
+    text,
+    deadline,
+    done:false
+  });
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  renderTasks();
+}
+
+/* =========================
+   TOGGLE SELESAI
+========================= */
+function toggleIndicator(taskIndex, indicatorIndex){
+  tasks[taskIndex].indicators[indicatorIndex].done =
+    !tasks[taskIndex].indicators[indicatorIndex].done;
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  renderTasks();
+}
+
+/* =========================
+   CEK TUGAS SELESAI
+========================= */
+function isTaskDone(task){
+  if(task.indicators.length === 0) return false;
+  return task.indicators.every(ind => ind.done);
+}
+
+/* =========================
+   RENDER SEMUA
 ========================= */
 function renderTasks(){
   let list = document.getElementById("taskList");
@@ -44,138 +70,78 @@ function renderTasks(){
 
   list.innerHTML="";
 
-  tasks.forEach((t,index)=>{
+  tasks.forEach((task, tIndex)=>{
 
-    // HANYA tampilkan yang BELUM selesai
-    if(!t.done){
+    let card = document.createElement("div");
+    card.className="card";
 
-      let li = document.createElement("li");
-      li.className="task-item";
+    let indicatorsHTML="";
 
-      li.innerHTML = `
-        <div>
-          <strong>${t.name}</strong><br>
-          <small>Deadline: ${t.deadline}</small>
+    task.indicators.forEach((ind, iIndex)=>{
+
+      checkDeadline(ind);
+
+      indicatorsHTML += `
+        <div class="indicator-item">
+          <input type="checkbox"
+            ${ind.done ? "checked" : ""}
+            onclick="toggleIndicator(${tIndex},${iIndex})">
+
+          <span style="${ind.done ? 'text-decoration:line-through;' : ''}">
+            ${ind.text}
+          </span>
+
+          <small>📅 ${ind.deadline}</small>
         </div>
-        <button onclick="toggleDone(${index})">
-          ✅ Done
-        </button>
       `;
+    });
 
-      let today = new Date();
-      let dl = new Date(t.deadline);
-      let diff = (dl - today)/(1000*60*60*24);
+    let status = isTaskDone(task)
+      ? "✅ TUGAS SELESAI"
+      : "⏳ BELUM SELESAI";
 
-      if(diff <= 2){
-        li.classList.add("deadline-soon");
-      }
+    card.innerHTML = `
+      <h3>${task.subject}</h3>
 
-      list.appendChild(li);
-    }
+      ${indicatorsHTML}
 
-  });
-}
+      <div class="add-indicator">
+        <input type="text" id="indicatorText-${tIndex}"
+          placeholder="Tambah indikator">
 
-/* =========================
-   TOAST NOTIFIKASI
-========================= */
-function showToast(msg){
-  let toast = document.getElementById("toast");
-  if(!toast) return;
+        <input type="date" id="indicatorDeadline-${tIndex}">
 
-  toast.textContent = msg;
-  toast.style.opacity = 1;
+        <button onclick="addIndicator(${tIndex})">Tambah</button>
+      </div>
 
-  setTimeout(()=>{
-    toast.style.opacity=0;
-  },2000);
-}
-
-/* =========================
-   PROGRESS PAGE
-========================= */
-function renderProgress(){
-  let fill = document.getElementById("progressFill");
-  let text = document.getElementById("progressText");
-  if(!fill) return;
-
-  let total = tasks.length;
-  let done = tasks.filter(t=>t.done).length;
-
-  let percent = total === 0 ? 0 : Math.round((done/total)*100);
-
-  fill.style.width = percent + "%";
-  text.innerText = percent + "% Misi Selesai 🌠";
-}
-
-/* =========================
-   CALENDAR PAGE
-========================= */
-function renderCalendar(){
-  let cal = document.getElementById("calendarList");
-  if(!cal) return;
-
-  cal.innerHTML="";
-
-  if(tasks.length === 0){
-    cal.innerHTML="<p>Tidak ada deadline.</p>";
-    return;
-  }
-
-  let sorted = [...tasks].sort((a,b)=>
-    new Date(a.deadline) - new Date(b.deadline)
-  );
-
-  sorted.forEach(t=>{
-    let div = document.createElement("div");
-    div.className="card";
-
-    div.innerHTML = `
-      <strong>${t.name}</strong><br>
-      Deadline: ${t.deadline}<br>
-      Status: ${t.done ? "Selesai ✅" : "Belum"}
+      <p class="status">${status}</p>
     `;
 
-    cal.appendChild(div);
+    list.appendChild(card);
   });
 }
 
 /* =========================
-   FOCUS TIMER
+   NOTIF DEADLINE H-1
 ========================= */
-let time = 1500;
-let interval;
+function checkDeadline(indicator){
+  let today = new Date();
+  let dl = new Date(indicator.deadline);
 
-function startTimer(){
-  if(interval) return;
+  let diff = Math.ceil((dl - today)/(1000*60*60*24));
 
-  interval = setInterval(()=>{
-    time--;
-
-    let minutes = Math.floor(time/60);
-    let seconds = time%60;
-
-    document.getElementById("timer").innerText =
-      `${minutes}:${seconds<10?'0':''}${seconds}`;
-
-    if(time<=0){
-      clearInterval(interval);
-      interval=null;
-      alert("🎉 Fokus Selesai!");
-    }
-  },1000);
-}
-
-function resetTimer(){
-  clearInterval(interval);
-  interval=null;
-  time=1500;
-  document.getElementById("timer").innerText="25:00";
+  if(diff === 1 && !indicator.done){
+    playNotification();
+  }
 }
 
 /* =========================
-   LOAD AWAL
+   BUNYI
 ========================= */
+function playNotification(){
+  let audio = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+  audio.play();
+}
+
+/* ========================= */
 renderTasks();
-renderProgress();
-renderCalendar();
