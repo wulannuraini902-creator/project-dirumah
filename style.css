@@ -1,479 +1,96 @@
-body{
-  margin:0;
-  font-family:Arial;
-  background:radial-gradient(circle at top, #1a002b, #000814 70%);
-  color:white;
-  overflow-x:hidden;
-}
-
-/* STAR ANIMATION */
-.stars{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:transparent;
-  background-image:radial-gradient(white 1px, transparent 1px);
-  background-size:50px 50px;
-  animation:moveStars 60s linear infinite;
-  z-index:-1;
-}
-
-@keyframes moveStars{
-  from{background-position:0 0;}
-  to{background-position:1000px 1000px;}
-}
-
-nav{
-  text-align:center;
-  padding:20px;
-  font-size:22px;
-  letter-spacing:2px;
-}
-
-.container{
-  padding:30px;
-  text-align:center;
-}
-
-.card{
-  background:rgba(255,255,255,0.08);
-  padding:20px;
-  border-radius:20px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 0 20px #7f5af0;
-  margin-bottom:30px;
-  animation:fadeUp 0.8s ease;
-}
-
-input{
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  margin:5px;
-}
-
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  background:linear-gradient(45deg,#7f5af0,#00c6ff);
-  color:white;
-  font-weight:bold;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 15px #00c6ff;
-}
-
-ul{
-  list-style:none;
-  padding:0;
-}
-
-li{
-  margin:10px 0;
-  padding:15px;
-  border-radius:15px;
-  background:rgba(255,255,255,0.1);
-  transition:0.3s;
-  animation:fadeUp 0.5s ease;
-}
-
-.deadline-soon{
-  background:rgba(255,0,80,0.6);
-  box-shadow:0 0 15px red;
-}
-
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-#toast{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#7f5af0;
-  padding:10px 20px;
-  border-radius:20px;
-  opacity:0;
-  transition:0.5s;
-}
-.nav-links{
-  margin-top:10px;
-}
-
-.nav-links a{
-  margin:0 10px;
-  text-decoration:none;
-  color:#00c6ff;
-  font-weight:bold;
-}
-
-.nav-links a:hover{
-  text-shadow:0 0 10px #00c6ff;
-}
-
-.progress-card{
-  margin-top:40px;
-  padding:30px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.08);
-  box-shadow:0 0 20px #7f5af0;
-  animation:fadeUp 0.8s ease;
-}
-
-.progress-bar{
-  width:100%;
-  height:30px;
-  background:rgba(255,255,255,0.2);
-  border-radius:20px;
-  overflow:hidden;
-  margin-bottom:20px;
-}
-
-#progressFill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#7f5af0,#00c6ff);
-  transition:1s;
-}
-@media (max-width: 600px){
-
-  nav h2{
-    font-size:18px;
-  }
-
-  .container{
-    padding:15px;
-  }
-
-  input{
-    width:100%;
-    margin-bottom:10px;
-  }
-
-  button{
-    width:100%;
-  }
-
-  li{
-    font-size:14px;
-  }
-
-  .progress-card{
-    padding:20px;
-  }
-
-}
-.timer-card{
-  margin-top:40px;
-  padding:30px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.08);
-  text-align:center;
-  box-shadow:0 0 20px #00c6ff;
-}
-
-#timer{
-  font-size:40px;
-  margin-bottom:20px;
-}
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
-  background:rgba(20,20,40,0.95);
-  backdrop-filter:blur(10px);
-  padding:10px 0;
-  border-top:1px solid rgba(255,255,255,0.1);
-  z-index:1000;
-}
-
-.bottom-nav a{
-  text-decoration:none;
-  color:#aaa;
-  font-size:14px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  transition:0.3s;
-}
-
-.bottom-nav a span{
-  font-size:11px;
-}
-
-.bottom-nav a:hover{
-  color:#00c6ff;
-  transform:scale(1.1);
-}
-
-.bottom-nav a.active{
-  color:#00c6ff;
-  text-shadow:0 0 10px #00c6ff;
-}
-/* FIX FULL WIDTH MOBILE */
-html, body{
-  margin:0;
-  padding:0;
-  width:100%;
-  overflow-x:hidden;
-}
-
-.container{
-  width:100%;
-  max-width:100%;
-  padding:20px;
-  box-sizing:border-box;
-}
-
-.progress-card{
-  width:100%;
-  box-sizing:border-box;
-}
-
-.progress-bar{
-  width:100%;
-  height:30px;
-}
-
-@media(max-width:600px){
-
-  h1{
-    font-size:22px;
-  }
-
-  .progress-card{
-    padding:20px;
-  }
-
-  #progressText{
-    font-size:18px;
-  }
-
-}
-/* === GALAXY BACKGROUND UNTUK SEMUA HALAMAN === */
+/* =========================
+   GALAXY BACKGROUND FINAL
+========================= */
 
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
-  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+  font-family:'Poppins', sans-serif;
   color:white;
   min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
   overflow-x:hidden;
+  background: radial-gradient(circle at 20% 20%, #1a1a40, #0d0d25 60%);
 }
 
-/* efek bintang */
-.stars{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:url('https://www.transparenttextures.com/patterns/stardust.png');
-  animation: moveStars 60s linear infinite;
-  z-index:-1;
-}
-
-@keyframes moveStars{
-  from{background-position:0 0;}
-  to{background-position:1000px 1000px;}
-}
-
-/* === CONTAINER TENGAH & FULL === */
-
-.container{
-  width:100%;
-  max-width:500px;
-  padding:25px;
-  box-sizing:border-box;
-  margin-top:40px;
-  text-align:center;
-  animation:fadeUp 0.8s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(30px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-/* CARD GALAXY */
-.card, .progress-card, .timer-card{
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(12px);
-  border-radius:20px;
-  padding:25px;
-  margin-top:20px;
-  box-shadow:0 0 25px rgba(127,90,240,0.6);
-  transition:0.4s;
-}
-
-.card:hover,
-.progress-card:hover,
-.timer-card:hover{
-  transform:scale(1.02);
-  box-shadow:0 0 35px #00c6ff;
-}
-
-/* input & button */
-input{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  margin-bottom:12px;
-  outline:none;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  border-radius:25px;
-  border:none;
-  background:linear-gradient(90deg,#7f5af0,#00c6ff);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:scale(1.05);
-}
-
-/* Hiasan planet glow */
-body::after{
-  content:"";
-  position:fixed;
-  width:200px;
-  height:200px;
-  background:radial-gradient(circle,#7f5af0,transparent);
-  bottom:-50px;
-  right:-50px;
-  border-radius:50%;
-  opacity:0.4;
-  z-index:-1;
-}
-
+/* BINTANG BERTEBARAN LEBIH BANYAK */
 body::before{
   content:"";
   position:fixed;
-  width:150px;
-  height:150px;
-  background:radial-gradient(circle,#00c6ff,transparent);
-  top:-40px;
-  left:-40px;
-  border-radius:50%;
-  opacity:0.4;
-  z-index:-1;
-}
-/* supaya konten tidak ketutup navbar */
-.container{
-  padding-bottom:80px;
-}
-/* FORM MODERN */
-.task-form{
-  margin-top:20px;
-  display:flex;
-  flex-direction:column;
-  gap:15px;
+  width:200%;
+  height:200%;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, white, transparent),
+    radial-gradient(2px 2px at 150px 80px, #bbb, transparent),
+    radial-gradient(1.5px 1.5px at 300px 200px, white, transparent),
+    radial-gradient(2px 2px at 450px 120px, #ccc, transparent),
+    radial-gradient(1.5px 1.5px at 600px 250px, #aaa, transparent),
+    radial-gradient(2px 2px at 750px 180px, white, transparent),
+    radial-gradient(1.5px 1.5px at 900px 300px, #ddd, transparent),
+    radial-gradient(2px 2px at 1050px 150px, white, transparent),
+    radial-gradient(1.5px 1.5px at 1200px 400px, #ccc, transparent),
+    radial-gradient(2px 2px at 1400px 500px, white, transparent);
+  background-repeat: repeat;
+  animation: moveStars 120s linear infinite;
+  z-index:-3;
 }
 
-.input-group{
-  display:flex;
-  align-items:center;
-  background:rgba(255,255,255,0.08);
-  padding:12px;
-  border-radius:15px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 0 15px rgba(127,90,240,0.4);
-  transition:0.3s;
+@keyframes moveStars{
+  from{transform:translateY(0);}
+  to{transform:translateY(-800px);}
 }
 
-.input-group:hover{
-  box-shadow:0 0 25px #00c6ff;
-}
-
-.input-group span{
-  margin-right:10px;
-  font-size:18px;
-}
-
-.input-group input{
-  background:transparent;
-  border:none;
-  color:white;
-  outline:none;
-  width:100%;
-  font-size:14px;
-}
-
-.add-btn{
-  background:linear-gradient(90deg,#7f5af0,#00c6ff);
-  border:none;
-  padding:12px;
-  border-radius:25px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.add-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 25px #00c6ff;
-}
-
-/* LIST STYLE */
-#taskList{
-  margin-top:25px;
-  list-style:none;
-  padding:0;
-}
-
-#taskList li{
-  background:rgba(255,255,255,0.08);
-  padding:15px;
-  border-radius:15px;
-  margin-bottom:12px;
-  box-shadow:0 0 15px rgba(0,198,255,0.3);
-  animation:fadeUp 0.5s ease;
-}
 /* =========================
-   BOTTOM NAV BESAR & MODERN
+   PLANET BERTEBARAN
 ========================= */
 
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  background: rgba(20, 20, 40, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 15px 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
+.planet{
+  position:fixed;
+  border-radius:50%;
+  z-index:-2;
+  opacity:0.8;
+  animation: floatPlanet 15s ease-in-out infinite;
 }
 
-.bottom-nav button {
-  background: linear-gradient(45deg, #7f5af0, #2cb67d);
-  border: none;
-  color: white;
-  font-size: 16px;      /* BESARIN TEKS */
-  padding: 12px 18px;   /* BESARIN TOMBOL */
-  border-radius: 15px;
-  transition: 0.3s;
-  font-weight: 600;
+.planet1{
+  width:120px;
+  height:120px;
+  background: radial-gradient(circle,#7f5af0,#2cb67d);
+  top:10%;
+  left:5%;
 }
 
-.bottom-nav button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 15px #7f5af0;
+.planet2{
+  width:90px;
+  height:90px;
+  background: radial-gradient(circle,#ff6ec7,#7873f5);
+  bottom:20%;
+  right:10%;
+}
+
+.planet3{
+  width:70px;
+  height:70px;
+  background: radial-gradient(circle,#00f5a0,#00d9f5);
+  top:50%;
+  right:5%;
+}
+
+.planet4{
+  width:50px;
+  height:50px;
+  background: radial-gradient(circle,#ffd166,#ef476f);
+  bottom:35%;
+  left:15%;
+}
+
+.planet5{
+  width:40px;
+  height:40px;
+  background: radial-gradient(circle,#06d6a0,#118ab2);
+  top:30%;
+  right:25%;
+}
+
+@keyframes floatPlanet{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-25px);}
 }
